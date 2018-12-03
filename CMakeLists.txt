@@ -1,0 +1,33 @@
+cmake_minimum_required(VERSION 2.8.5 FATAL_ERROR)
+project (swim2coltest)
+set (swim2coltest_VERSION_MAJOR 1)
+set (swim2coltest_VERSION_MINOR 0)
+
+
+set(CMAKE_C_COMPILER "sw5cc.new")
+set(CMAKE_CXX_COMPILER "mpiCC")
+set(CMAKE_AR "swar")
+option(BUILD_TEST "Build the test sources" ON)
+
+file(GLOB SLAVE_SOURCES "./slave/*.c")
+#set(SLAVE_SOURCES ./slave/sw_slave_im2col.c)
+file(GLOB HOST_SOURCES "./src/*.c")
+file(GLOB TEST_SOURCES "./unitest/*.c")
+
+add_definitions(-msimd -O2)
+
+set_source_files_properties(${SLAVE_SOURCES} COMPILE_FLAGS "-slave")
+set_source_files_properties(${HOST_SOURCES} ${TEST_SOURCES} COMPILE_FLAGS "-host")
+add_library(swim2collib ${SLAVE_SOURCES} ${HOST_SOURCES} ${TEST_SOURCES})
+link_directories(../swblas_release/)
+
+link_libraries("-hybrid -lm_slave -lswblas -allshare")
+link_libraries(swim2collib)
+link_libraries(rt)
+link_libraries(stdc++)
+include_directories(.)
+include_directories(../swblas_release/)
+set_source_files_properties(main.cpp COMPILE_FLAGS "-host")
+add_executable(swim2coltest main.cpp)
+#add_executable(samplesort test/samplesort.cpp)
+enable_testing()
