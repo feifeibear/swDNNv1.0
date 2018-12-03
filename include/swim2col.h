@@ -61,6 +61,8 @@ typedef struct Im2colPara_st {
   int dilation_h;
   int dilation_w;
   int zeropad_col_rowsize;
+  int zeropad_col_colsize;
+  int batch_size;
 }Im2colPara;
 
 
