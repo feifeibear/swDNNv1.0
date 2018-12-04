@@ -132,4 +132,3 @@ void test_im2col_zeropad_swblas_float(int channels, int filters, int height, int
 #undef Type
 }
 
-

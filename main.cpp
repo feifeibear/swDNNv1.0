@@ -28,15 +28,22 @@ void test_im2col_swblas_main(int Ni, int No, int C, int Pad, int K, int stride) 
   return;
 }
 
-int main() {
-  int Ni = 64;
-  int No = 96;
-  int C = 32;
-  int Pad = 1;
-  int K = 3;
-  int stride = 1;
+#define _len_ 7 
+int test_im2col_batch() {
+  int C[_len_] =      {224, 34, 32, 224, 224, 27, 13};
+  int Ni[_len_] =     {3, 64, 64, 3,   3, 96, 256};
+  int No[_len_] =     {96, 96, 96, 96,  96, 256, 384};
+  int K[_len_] =      {11, 3,  3,  11,  8, 5, 3};
+  int Pad[_len_] =    {2, 1,  1,  2,   2, 2, 1};
+  int stride[_len_] = {4, 1,  1,  4,   4, 2, 1};
   start_use_slave();
-  test_im2col_swblas_main(Ni, No, C, Pad, K, stride);
+  for(int i = 0; i < _len_; ++i)
+    test_im2col_swblas_main(Ni[i], No[i], C[i], Pad[i], K[i], stride[i]);
   end_use_slave();
+  return 0;
+}
+
+int main() {
+  test_tensor_trans_float();
   return 0;
 }
