@@ -9,8 +9,8 @@ set(CMAKE_CXX_COMPILER "mpiCC")
 set(CMAKE_AR "swar")
 option(BUILD_TEST "Build the test sources" ON)
 
-file(GLOB SLAVE_SOURCES "./slave/tensor_trans/*.c" "./slave/im2col/*.c" "./slave/col2im/*.c")
-#set(SLAVE_SOURCES ./slave/sw_slave_im2col.c)
+file(GLOB SLAVE_SOURCES "./slave/tensor_trans/*.c" "./slave/im2col/*.c"
+  "./slave/col2im/*.c" "./slave/bias/*.c")
 file(GLOB HOST_SOURCES "./src/*.c")
 file(GLOB TEST_SOURCES "./unitest/src/*.c")
 
