@@ -1,11 +1,16 @@
 ##swDNN
 
 ##Features
+three convolutional layer implementations.
+1. Explicit-GEMM
 #im2col
 1. support stride
 2. support batch processing
-
 #col2im
+
+2. Implicit-GEMM
+
+3. Winograd
 
 
 # TODO
