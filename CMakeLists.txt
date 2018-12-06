@@ -10,15 +10,17 @@ set(CMAKE_AR "swar")
 option(BUILD_TEST "Build the test sources" ON)
 
 file(GLOB SLAVE_SOURCES "./slave/tensor_trans/*.c" "./slave/im2col/*.c"
-  "./slave/col2im/*.c" "./slave/bias/*.c" "./slave/winograd/*.c")
+  "./slave/col2im/*.c" "./slave/bias/*.c" "./slave/winograd/*.c"
+  "./slave/implicit_conv/*.c")
 file(GLOB HOST_SOURCES "./src/*.c")
-file(GLOB TEST_SOURCES "./unitest/src/*.c")
+file(GLOB TEST_SOURCES "./unitest/src/*.c" "./unitest/src/*.cpp")
 
 add_definitions(-msimd -O2)
 add_definitions(-D_MEM_ALIGN_)
 
 set_source_files_properties(${SLAVE_SOURCES} COMPILE_FLAGS "-slave")
 set_source_files_properties(${HOST_SOURCES} ${TEST_SOURCES} COMPILE_FLAGS "-host")
+set_source_files_properties(${TEST_SOURCES} COMPILE_FLAGS "-host -std=c99")
 add_library(swdnnlib ${SLAVE_SOURCES} ${HOST_SOURCES} ${TEST_SOURCES})
 
 link_libraries("-hybrid -lm_slave -allshare")
