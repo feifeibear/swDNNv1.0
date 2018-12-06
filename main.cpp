@@ -1,7 +1,8 @@
 extern "C" {
 #include "include/swim2col.h"
 #include "include/swcommon.h"
-#include "include/swtest.h"
+#include "./unitest/include/test_im2col.h"
+#include "./unitest/include/test_tensortrans.h"
 }
 #include <sys/time.h>
 #include <stdlib.h>
