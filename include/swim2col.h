@@ -20,6 +20,7 @@ void swim2col_f(const float* data_im, const int channels,
     const int stride_h, const int stride_w,
     const int dilation_h, const int dilation_w,
     float* data_col);
+
 // data type: float
 void swim2col_zeropad_f(const float* data_im, const int channels,
     const int height, const int width, const int kernel_h, const int kernel_w,
@@ -28,7 +29,20 @@ void swim2col_zeropad_f(const float* data_im, const int channels,
     const int dilation_h, const int dilation_w,
     float* data_col);
 
+// data type: float
+void swim2col_zeropad_batch_trans_f(const float* data_im, const int channels,
+    const int height, const int width, const int kernel_h, const int kernel_w,
+    const int pad_h, const int pad_w,
+    const int stride_h, const int stride_w,
+    const int dilation_h, const int dilation_w,
+    float* data_col, int batch_size);
 
+void swim2col_zeropad_batch_f(const float* data_im, const int channels,
+    const int height, const int width, const int kernel_h, const int kernel_w,
+    const int pad_h, const int pad_w,
+    const int stride_h, const int stride_w,
+    const int dilation_h, const int dilation_w,
+    float* data_col, int batch_size);
 
 // data type: double
 void swcol2im_d(const double* data_col, const int channels,

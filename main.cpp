@@ -22,7 +22,8 @@ void test_im2col_swblas_main(int Ni, int No, int C, int Pad, int K, int stride) 
   int stride_w = stride;
   //sw_blas_init();
   //test_im2col_swblas_float(channels, filters, height, width, kernel_h, kernel_w, pad_h, pad_w, stride_h, stride_w);
-  test_im2col_zeropad_batch_swblas_float(channels, filters, height, width, kernel_h, kernel_w, pad_h, pad_w, stride_h, stride_w, 128);
+  //test_im2col_zeropad_swblas_float(channels, filters, height, width, kernel_h, kernel_w, pad_h, pad_w, stride_h, stride_w, 128);
+  test_im2col_zeropad_batch_trans_swblas_float(channels, filters, height, width, kernel_h, kernel_w, pad_h, pad_w, stride_h, stride_w, 128);
   //test_col2im_swblas_float(channels, filters, height, width, kernel_h, kernel_w, pad_h, pad_w, stride_h, stride_w);
   //sw_blas_stop();
   return;
@@ -44,6 +45,7 @@ int test_im2col_batch() {
 }
 
 int main() {
-  test_tensor_trans_float();
+  test_im2col_batch();
+  //test_tensor_trans_float();
   return 0;
 }

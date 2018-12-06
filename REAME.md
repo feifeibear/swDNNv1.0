@@ -1,16 +1,25 @@
-# swDNN
+##swDNN
 
+##Features
 #im2col
+1. support stride
+2. support batch processing
 
-# I decide to use cmake to build this project
-# why batch-im2col is wrong
+#col2im
 
+
+# TODO
 # why batch-im2col is slow in some cases
 It is not because of data movement in LDM.
 bad DMA pattern?
 
 
-# Add new layers
+## How to
+#Use
+mkdir ./build/
+cd build && cmake .. && make
+
+#Add new layers
 1. mkdir a directory using your new layer name in ./slave/
 `mkdir ./slave/conv`
 2. write your slave code with name sw_slave_###

@@ -84,7 +84,6 @@ void sw_im2col_large_stride_zeropad_batch_f(Im2colPara *para) {
   for(ir=row_start;ir<row_end;++ir) {
     input_row = (ir)%(height+2*pad_h)-pad_h;
     channel = (ir)/(height+2*pad_h);
-    inoff = channel*width*height;
     // the row is pad
     if(!((unsigned)input_row<(unsigned)height)) {
       for(ic = 0; ic < local_buff_size; ++ic) local_buffer[ic] = 0.;
@@ -102,6 +101,7 @@ void sw_im2col_large_stride_zeropad_batch_f(Im2colPara *para) {
       if(id==0) printf("before dma GET %d\n",input_row);
 #endif
       // get data by dma
+      inoff = channel*width*height;
       //dma(dma_get_im,(long)(input_ptr+input_row*width+inoff),(long)(local_buffer+pad_w));
       dma(dma_get_im,(long)(input_ptr+input_row*width+inoff),(long)(local_buffer));
       dma_wait(&input_replyget, 1); input_replyget = 0;

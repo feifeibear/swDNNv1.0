@@ -37,7 +37,6 @@ void sw_im2col_large_stride_f(Im2colPara *para) {
   Type* local_outbuff = (Type*)ldm_malloc(sizeof(Type)*output_w);
   Type* local_buffer = (Type*)local_vbuffer;
   // begin ptr of dma_get
-  Type* local_buffer_begin;
   Type* input_ptr = (Type*)para->data_im;
   Type* output_ptr= (Type*)para->data_col;
 
@@ -96,7 +95,8 @@ void sw_im2col_large_stride_f(Im2colPara *para) {
 #endif
 
       // get data by dma
-      dma(dma_get_im,(long)(input_ptr+input_row*width+inoff),(long)(local_buffer+pad_w));
+      dma(dma_get_im,(long)(input_ptr+input_row*width+inoff),
+          (long)(local_buffer+pad_w));
       dma_wait(&input_replyget, 1); input_replyget = 0;
 #ifdef PRINT_DEBUGINFO
       if(id==0) printf("dma get end.\n");
@@ -171,7 +171,6 @@ void sw_im2col_large_stride_d(Im2colPara *para) {
   Type* local_outbuff = (Type*)ldm_malloc(sizeof(Type)*output_w);
   Type* local_buffer = (Type*)local_vbuffer;
   // begin ptr of dma_get
-  Type* local_buffer_begin;
   Type* input_ptr = (Type*)para->data_im;
   Type* output_ptr= (Type*)para->data_col;
 

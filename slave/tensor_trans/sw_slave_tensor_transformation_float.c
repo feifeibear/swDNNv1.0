@@ -313,20 +313,18 @@ void swapNBHW_f(SlaveParam_f *pParam)
 					nIndex = nIndex+splitHW;
 					simd_load(va2,pLocalIn+nIndex);
 					nIndex = nIndex+splitHW;
-					simd_load(va3,pLocalIn+nIndex);					
+					simd_load(va3,pLocalIn+nIndex);
 					nIndex = w*splitNB+l;
-					
 					SWAPABCD2(va0,va1,va2,va3);
-					
 					simd_store(va0,pLocalOut+nIndex);
 					nIndex = nIndex+splitNB;
 					simd_store(va1,pLocalOut+nIndex);
 					nIndex = nIndex+splitNB;
 					simd_store(va2,pLocalOut+nIndex);
 					nIndex = nIndex+splitNB;
-					simd_store(va3,pLocalOut+nIndex);			
+					simd_store(va3,pLocalOut+nIndex);
 				}
-			}		
+			}
 			mb();
 			dma(dmaput,(long)(pParam->pOut+nOffset0+h*nH),(long)(pLocalOut));			
 			dma_wait(&putreply,1);putreply=0;
