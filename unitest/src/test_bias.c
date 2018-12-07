@@ -156,25 +156,10 @@ int test_bias()
 
         free(bbottom_data);
         free(bbias_data);
-        //free(top_data);
-        //free(top_diff);
         free(top_data);
-        //free(top_1);
         free(multi);
         free(my_top_data);
-        //free(my_top_1);
-        //free(my_maxidx);
-        //free(blob_2);
-        //free(mean_origin);
-        //free(variance_origin);
-        //free(spatial_sum_multiplier);
-        //free(num_by_chans);
-        //free(batch_sum_multiplier);
-        //free(xnorm);
-        //free(temp);
-  //athread_init();
 
-  //athread_halt();
   return 0;
 }
 
