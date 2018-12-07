@@ -372,8 +372,8 @@ int test_backward_pad_float() {
   Ni = 128;
   No = 128;
   B  = 128;
-  Ci = 112;
-  Ri = 112;
+  Ci = 32; //112;
+  Ri = 32; //112;
   //Ci = 4;
   //Ri = 4;
   K  = 3;
@@ -395,13 +395,15 @@ int test_backward_pad_float() {
   float* out_diff = (float*)malloc(sizeof(float)*out_size);
 
   printf("after mem alloc\n");
-  for( int i = 0; i < in_size; ++i )
+  printf("in_size %d weight_size %d out_size %d\n", in_size, weight_size, out_size);
+  for( int i = 0; i < in_size; ++i) {
     in[i] = rand()/(float)RAND_MAX;
+  }
   printf("after mem alloc\n");
-  for( int i = 0; i < weight_size; ++i )
+  for( int i = 0; i < weight_size; ++i)
     weight[i] = rand()/(float)RAND_MAX;
   printf("after mem alloc\n");
-  for( int i = 0; i < out_size; ++i )
+  for( int i = 0; i < out_size; ++i)
     out_diff[i] = rand()/(float)RAND_MAX;
 
   printf("after init\n");
@@ -856,7 +858,7 @@ int test_conv_implicit() {
   int C = 224; //atoi(argv[3]);
 
   //test_forward_pad();
-  test_forward_pad_float();
+  //test_forward_pad_float();
   //test_forward_pad_float();
 
   //test_backward_pad();

@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <cblas.h>
 #include <string.h>
 #include <malloc.h>
 #include <assert.h>
@@ -8,6 +7,7 @@
 #include "include/swwinogradconv.h"
 #include "../include/swcommon.h"
 #include "swblas.h"
+#include <cblas.h>
 
 //extern SLAVE_FUN(FJR_blas_sgemm)();
 //extern SLAVE_FUN(FJR_blas_sgemm_smallB)();

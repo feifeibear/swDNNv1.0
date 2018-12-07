@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.5 FATAL_ERROR)
-project (swim2coltest)
+project (swDNN)
 set (swim2coltest_VERSION_MAJOR 1)
 set (swim2coltest_VERSION_MINOR 0)
 
@@ -32,7 +32,8 @@ include_directories(.)
 include_directories(/home/export/online1/swyf/swdnn/fjr/2018-09/BLAS/swblas_release/)
 set_source_files_properties(main.cpp COMPILE_FLAGS "-host")
 add_executable(swdnn main.cpp)
-target_link_libraries(swdnnlib /home/export/online1/swyf/swdnn/fjr/2018-09/BLAS/swblas_release/libswblas.a)
+target_link_libraries(swdnnlib
+  /home/export/online1/swyf/swdnn/fjr/2018-09/BLAS/swblas_release/build/libswBLASlib.a)
 target_link_libraries(swdnnlib /home/export/online1/swyf/swdnn/fjr/2018-09/BLAS/swblas_release/thirdparty/lib/cblas_LINUX0324.a)
 target_link_libraries(swdnnlib /home/export/online1/swyf/swdnn/fjr/2018-09/BLAS/swblas_release/thirdparty/lib/libswblas0324.a)
 #add_executable(samplesort test/samplesort.cpp)

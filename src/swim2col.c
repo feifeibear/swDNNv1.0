@@ -4,17 +4,17 @@
 
 #define LDM_MAX (64*1024)
 
-extern SLAVE_FUN(sw_im2col_large_stride_f)();
-extern SLAVE_FUN(sw_im2col_large_stride_zeropad_f)();
-extern SLAVE_FUN(sw_im2col_large_stride_zeropad_batch_f)();
-extern SLAVE_FUN(sw_im2col_large_stride_zeropad_batch_trans_f)();
-extern SLAVE_FUN(sw_im2col_large_stride_d)();
-extern SLAVE_FUN(sw_im2col_large_stride_d)();
-extern SLAVE_FUN(sw_col2im_large_stride_f)();
-extern SLAVE_FUN(sw_im2col_large_d)();
-extern SLAVE_FUN(sw_im2col_large_f)();
-extern SLAVE_FUN(sw_col2im_large_d)();
-extern SLAVE_FUN(sw_col2im_large_f)();
+extern void SLAVE_FUN(sw_im2col_large_stride_f)();
+extern void SLAVE_FUN(sw_im2col_large_stride_zeropad_f)();
+extern void SLAVE_FUN(sw_im2col_large_stride_zeropad_batch_f)();
+extern void SLAVE_FUN(sw_im2col_large_stride_zeropad_batch_trans_f)();
+extern void SLAVE_FUN(sw_im2col_large_stride_d)();
+extern void SLAVE_FUN(sw_im2col_large_stride_d)();
+extern void SLAVE_FUN(sw_col2im_large_stride_f)();
+extern void SLAVE_FUN(sw_im2col_large_d)();
+extern void SLAVE_FUN(sw_im2col_large_f)();
+extern void SLAVE_FUN(sw_col2im_large_d)();
+extern void SLAVE_FUN(sw_col2im_large_f)();
 
 
 // float version
