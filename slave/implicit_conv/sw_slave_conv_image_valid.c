@@ -97,36 +97,34 @@ void conv_image_size_aware(ConvData* param)
 
   for(RoStart = 0; RoStart < Ro; RoStart++){
     for(CoStart = 0; CoStart < Co; CoStart+=bCo){
-		
-	 for(i=0; i<local_output_size;++i)
-		local_output[i] = 0.0;
+	    for(i=0; i<local_output_size;++i)
+		    local_output[i] = 0.0;
 
-	  int weight_offset = Ni*No;
-      for(cKr=0; cKr < K; ++cKr){
-		for(cKc=0; cKc < K; ++cKc){
+	      int weight_offset = Ni*No;
+        for(cKr=0; cKr < K; ++cKr){
+		      for(cKc=0; cKc < K; ++cKc){
 	  		//dma(dma_get_input, (long)(input_base + 4*((RoStart+cKr)*Ci*Ni*8 + (CoStart+cKc)) ), (long)(local_input));
 	  		//dma_wait(&replyget_input, 1); replyget_input = 0;
 
-			if(cKr == K-1 && cKc == K-1 ){
-				dma(dma_get_weight, (long)(g_weight_ptr), (long)(local_weight+load_idx*local_weight_size));
-				if(CoStart+bCo < Co){
-					dma(dma_get_input, (long)(input_base + 4*((RoStart)*Ci*Ni*8 + (CoStart+bCo)) ), (long)(local_input + load_idx*local_input_size));
-				}
-				else{
-					dma(dma_get_input, (long)(input_base + 4*((RoStart+1)*Ci*Ni*8)), (long)(local_input + load_idx*local_input_size));
-				}
-			}
-			else{
-				dma(dma_get_weight, (long)(g_weight_ptr + weight_offset), (long)(local_weight + load_idx*local_weight_size));
-				if(cKc != K-1){
-					dma(dma_get_input, (long)(input_base + 4*((RoStart+cKr)*Ci*Ni*8 + (CoStart+cKc+1)) ), (long)(local_input + load_idx*local_input_size));
-				}
-				else{
-					dma(dma_get_input, (long)(input_base + 4*((RoStart+cKr+1)*Ci*Ni*8 + (CoStart)) ), (long)(local_input + load_idx*local_input_size));
-				}
-			}
-				
-			weight_offset+=Ni*No;
+			  if(cKr == K-1 && cKc == K-1 ){
+			  	dma(dma_get_weight, (long)(g_weight_ptr), (long)(local_weight+load_idx*local_weight_size));
+			  	if(CoStart+bCo < Co){
+			  		dma(dma_get_input, (long)(input_base + 4*((RoStart)*Ci*Ni*8 + (CoStart+bCo)) ), (long)(local_input + load_idx*local_input_size));
+			  	}
+			  	else{
+			  		dma(dma_get_input, (long)(input_base + 4*((RoStart+1)*Ci*Ni*8)), (long)(local_input + load_idx*local_input_size));
+			  	}
+			  }
+			  else{
+			  	dma(dma_get_weight, (long)(g_weight_ptr + weight_offset), (long)(local_weight + load_idx*local_weight_size));
+			  	if(cKc != K-1){
+			  		dma(dma_get_input, (long)(input_base + 4*((RoStart+cKr)*Ci*Ni*8 + (CoStart+cKc+1)) ), (long)(local_input + load_idx*local_input_size));
+			  	}
+			  	else{
+			  		dma(dma_get_input, (long)(input_base + 4*((RoStart+cKr+1)*Ci*Ni*8 + (CoStart)) ), (long)(local_input + load_idx*local_input_size));
+			  	}
+			  }
+			  weight_offset+=Ni*No;
 
 	  		dgemmas( local_input + calc_idx*local_input_size, 
 					local_weight + calc_idx*local_weight_size, 
@@ -139,11 +137,11 @@ void conv_image_size_aware(ConvData* param)
 					cid);
 
 	  		dma_wait(&replyget_weight, 1); replyget_weight = 0;
-			dma_wait(&replyget_input, 1); replyget_input = 0;
+			  dma_wait(&replyget_input, 1); replyget_input = 0;
 
 	  		load_idx = 1-load_idx;
-			calc_idx = 1-calc_idx;
-		}//cKc
+			  calc_idx = 1-calc_idx;
+		  }//cKc
 	  }//cKr
 
       dma(dma_put_output, (long)(output_base + (RoStart*Co*No*8+CoStart)*4), (long)(local_output));
