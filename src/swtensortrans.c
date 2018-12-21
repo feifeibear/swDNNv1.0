@@ -4,12 +4,12 @@
 #include <simd.h>
 #include "./include/swtensortrans.h"
 
-extern SLAVE_FUN(swapBN)();
-extern SLAVE_FUN(swapNBHW)();
-extern SLAVE_FUN(swapNBHW_ROLL)();
-extern SLAVE_FUN(swapBN_f)();
-extern SLAVE_FUN(swapNBHW_f)();
-extern SLAVE_FUN(swapNBHW_ROLL_f)();
+extern void SLAVE_FUN(swapBN)();
+extern void SLAVE_FUN(swapNBHW)();
+extern void SLAVE_FUN(swapNBHW_ROLL)();
+extern void SLAVE_FUN(swapBN_f)();
+extern void SLAVE_FUN(swapNBHW_f)();
+extern void SLAVE_FUN(swapNBHW_ROLL_f)();
 
 // high -> low
 // B, N, W, H

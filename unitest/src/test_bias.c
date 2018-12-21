@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-
+#define USE_SWDNN
 int test_bias() 
 {
     int a[3],b[5],cc[4];

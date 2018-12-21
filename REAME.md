@@ -1,11 +1,16 @@
-##swDNN
+##swDNNv2.0
 
 ##Features
+three convolutional layer implementations.
+1. Explicit-GEMM
 #im2col
 1. support stride
 2. support batch processing
-
 #col2im
+
+2. Implicit-GEMM
+
+3. Winograd
 
 
 # TODO
@@ -32,3 +37,6 @@ vi swconv.h
 4. write your test code in ./unitest/src/test_###.c
 6. update test header file in ./unitest/include/test_###.h
 
+
+#Author
+Jiarui Fang fang_jiarui@163.com

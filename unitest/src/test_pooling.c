@@ -10,6 +10,7 @@
 #define MAXTIMERSIZE 1000
 
 #define NUM_THREADS 64
+#define USE_SWDNN
 
 // extern void SLAVE_FUN(poolingForwardMax_f)();
 // extern void SLAVE_FUN(poolingForwardAvg_f)();

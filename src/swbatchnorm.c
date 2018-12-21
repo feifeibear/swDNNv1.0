@@ -6,6 +6,8 @@
 // #include "caffe/util/matrix_trans.h"
 // #include "caffe/swlayers/batch_norm_type.h"
 
+#define USE_SWDNN
+
 #include "../include/swbatchnorm.h"
 extern SLAVE_FUN(batch_slave_use_forward_f)();
 extern SLAVE_FUN(batch_slave_nouse_forward_f)();
