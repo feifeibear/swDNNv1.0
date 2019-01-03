@@ -7,7 +7,7 @@
 
 extern SLAVE_FUN(lstm_slave_clip_forward_f)();
 extern SLAVE_FUN(lstm_slave_noclip_forward_f)();
-
+extern SLAVE_FUN(lstm_std_slave_forward_f)();
 void sw_lstm_clip_forward_impl_f(
         float * clip_t,
         float * pre_gate_t,
@@ -61,4 +61,26 @@ void sw_lstm_noclip_forward_impl_f(
   athread_join();
   free(param);
 }
-
+/////////////////////
+void sw_std_lstm_forward_impl_f(
+        float * X,
+        float * C_prev,
+        float * cont,
+        float * C,
+        float * H,
+        int num,
+        int hidden_dim_
+)
+{
+    STDLSTMData * param = (STDLSTMData*)malloc(sizeof(STDLSTMData));
+    param->X = X;
+    param->C_prev = C_prev;
+    param->cont = cont;
+    param->C = C;
+    param->H = H;
+    param->num = num;
+    param->hidden_dim_ = hidden_dim_;
+    athread_spawn(lstm_std_slave_forward_f,param);
+    athread_join();
+    free(param);
+}
