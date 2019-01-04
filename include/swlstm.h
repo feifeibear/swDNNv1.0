@@ -40,6 +40,7 @@ void sw_lstm_noclip_forward_impl_f(
         int H_
 );
 /////////////
+/*
 typedef struct STDLSTMData_st{
         void * X;
         void * C_prev;
@@ -59,5 +60,6 @@ void sw_std_lstm_forward_impl_f(
         int num,
         int hidden_dim_
 );
+*/
 
 #endif

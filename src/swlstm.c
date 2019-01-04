@@ -62,6 +62,7 @@ void sw_lstm_noclip_forward_impl_f(
   free(param);
 }
 /////////////////////
+/*
 void sw_std_lstm_forward_impl_f(
         float * X,
         float * C_prev,
@@ -84,3 +85,4 @@ void sw_std_lstm_forward_impl_f(
     athread_join();
     free(param);
 }
+*/

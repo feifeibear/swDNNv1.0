@@ -414,6 +414,7 @@ void lstm_slave_clip_forward_f(LSTMData * param)
   ldm_free(ldm_clip,2*1024);
 }
 //////////////////////////
+/*
 void lstm_std_slave_forward_f(STDLSTMData * param)
 {
   float * ldm_pre_gate = (float *)ldm_malloc(BUFFSIZE);
@@ -595,6 +596,6 @@ void lstm_std_slave_forward_f(STDLSTMData * param)
   ldm_free(ldm_temp,BUFFSIZE);
   ldm_free(ldm_clip,2*1024);
 }
-
+*/
 
 
