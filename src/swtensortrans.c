@@ -50,6 +50,10 @@ inline int get_split_size(int nSize,int nMaxSize)
 	return nSplitSize;
 }
 
+/********
+ * float* in is a matrix of size (highDim, lowDim)
+ * transpose the matrix to (lowDim, highDim) and store in out
+ * ******/
 void swap_lowdim_f(float*in, float*out, int highDim, int lowDim)
 {
 	int cRi, cCi, cNi, cB;
@@ -96,6 +100,11 @@ void swap_lowdim_f(float*in, float*out, int highDim, int lowDim)
     athread_join();
 }
 
+/*******
+ * tensor in is of shape (B, N, H, W)
+ * out is of shape (N, B, H, W)
+ * swap two high dimension of 4D tensor
+ * *****/
 inline void swapBN_d(double*in,double*out,int B,int N,int H, int W)
 {
 	int nNB = N*B;	
@@ -113,8 +122,9 @@ inline void swapBN_d(double*in,double*out,int B,int N,int H, int W)
 	param.nBNLeftThreadsNum = param.nCount >0 ? nTmp:0;
 	
 	athread_spawn(swapBN,(void *)&param);
-    athread_join();
+  athread_join();
 }
+
 inline void swapBN_f(float*in,float*out,int B,int N,int H, int W)
 {
 	int nNB = N*B;	
@@ -393,6 +403,11 @@ void image_caffe_to_swdnn_d(double*in,double*out,int B,int N,int H,int W)
 	
 	free(sout);
 }
+
+/*******
+ * swap tensor of shape (B, N, H, W) to (H, W, N, B)
+ * through two data traverse
+ * ****/
 void image_caffe_to_swdnn_f(float*in,float*out,int B,int N,int H,int W)
 {
 	int cRi, cCi, cNi, cB;

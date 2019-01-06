@@ -1,3 +1,7 @@
+/****
+ * Jiarui Fang
+ * fang_jiarui@163,com
+ * ****/
 #include "include/swim2col.h"
 #include "include/swcommon.h"
 #include "./include/swtensortrans.h"
@@ -7,7 +11,13 @@
 #include <math.h>
 #include "swblas.h"
 
-
+/******
+ * a unitest for batch-pad-im2col
+ * Optimizations:
+ * 1. batch im2col: transpose input features (B, N, R, C) -> (N, R, C, B), then perform batch-im2col
+ * 2. zeropadding, (N, R, C, B) -> (K*K*N + pad, Ro*Co*B +pad), adding pad make GEMM easy
+ * 3. batch-GEMM , make sure filters are like (K*K*Ni+pad, No)
+ * ***/
 void test_im2col_zeropad_batch_trans_swblas_float(int channels, int filters, int height, int width, int kernel_h, int kernel_w, int pad_h, int pad_w, int stride_h, int stride_w, int batch_size) {
   printf("begin test_im2col_zeropad_batch_swblas_float\n");
   int i, j, k;
@@ -55,13 +65,13 @@ void test_im2col_zeropad_batch_trans_swblas_float(int channels, int filters, int
     printf("allocate zero_pad_data_col failed!\n");
   memset(zero_pad_data_col, 0.0, sizeof(Type)*pad_col_size*batch_size);
 
-
-
   //params for GEMM
   int N = filters;
   int M = zeropad_col_rowsize*batch_size;
   int K = zeropad_col_colsize;
 
+  /*
+  //search for the best block size
   int blkK = 0;
   int blkM = 0;
   int blkN = 0;
@@ -77,6 +87,7 @@ void test_im2col_zeropad_batch_trans_swblas_float(int channels, int filters, int
     }
   }
   printf("im2col M %d K %d N %d blkM %d blkK %d blkN %d\n", M, K, N, blkM, blkK, blkN);
+  */
 
   float* output = (float*)malloc(sizeof(float)*M*N);
   float* weights = (float*)malloc(sizeof(float)*N*K);
@@ -142,7 +153,8 @@ void test_im2col_zeropad_batch_trans_swblas_float(int channels, int filters, int
   //printf("3.GEMM M %d N %d K %d : %lf Gflops %lf sec\n", M, N, K, total_flops/gemm_tt, gemm_tt);
 
   gettimeofday(&t1, NULL);
-  sw_sgemm_trans(zero_pad_data_col, weights, output, M, N, K, blkM, blkN, blkK);
+  //sw_sgemm_trans(zero_pad_data_col, weights, output, M, N, K, blkM, blkN, blkK);
+  sw_cblas_sgemm(CblasRowMajor, CblasTrans, CblasNoTrans, N, M, K, 1.0, weights, N, zero_pad_data_col, M, 0.0, output, M);
   gettimeofday(&t2, NULL);
   double batch_gemm_tt = TIME(t1,t2);
   printf("4. batch GEMM M %d N %d K %d : %lf Gflops %lf sec\n", M, N, K, total_flops/batch_gemm_tt, batch_gemm_tt);

@@ -128,7 +128,7 @@ void winograd_conv(const int M, int irows, int C, int K, const int batch, long* 
 
     timer = timer_acc/1.0f;
     double nflops = (double)batch/1000*K/1000*C/1000*(irows-2)*(irows-2)*3*3*2; 
-    double gflops = (double) nflops/timer; 
+    double gflops = (double) nflops/timer;
     *total_flops += nflops; 
     *total_time += timer; 
 

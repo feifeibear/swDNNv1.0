@@ -360,7 +360,7 @@ static void batched_gemm(const float* image, const float* filter, float* out, in
     //params->No = No;
     //params->B = 128;
     //params->T = T*B/128;
-    printf("M %d K %d N %d blkM %d: ", T*B, Ni, No, blkM);
+    //printf("M %d K %d N %d blkM %d: ", T*B, Ni, No, blkM);
     struct timeval t1, t2;
     gettimeofday(&t1, NULL);
     for(i = 0; i < 16; i++){
@@ -374,6 +374,7 @@ static void batched_gemm(const float* image, const float* filter, float* out, in
             cblas_sgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, B*T, No, Ni, alpha, im, Ni, fi, No, beta, ot, No);
           } else if(!use_blas && No%128 == 0 && Ni%32 == 0) {
             sw_sgemm(im, fi, ot, B*T, No, Ni, blkM);
+            //sw_cblas_sgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, B*T, No, Ni, alpha, im, Ni, fi, No, beta, ot, No);
           }
           else {
             cblas_sgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, B*T, No, Ni, alpha, im, Ni, fi, No, beta, ot, No);
