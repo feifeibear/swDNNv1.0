@@ -152,6 +152,7 @@ void winograd_conv(const int M, int irows, int C, int K, const int batch, long* 
     } else
         printf("swBLAS CONV GFLOPS is %.2f \tGFlops \tand timing is \t%f  seconds \n", gflops, timer); 
 
+    timer_acc = 0.0f; 
     gettimeofday(&t1, NULL);
     sw_winograd_conv(M, image, irows, C, filter, K, batch, out, 1);
     gettimeofday(&t2, NULL);
@@ -196,25 +197,52 @@ void winograd_conv(const int M, int irows, int C, int K, const int batch, long* 
 #endif
 }
 
-int test_winograd_conv(int Ri, int Ni, int No, int batch, int verify){
+int profile_winograd(int Ri, int Ni, int No, int batch, int verify){
   int i, j; 
   double timer; 
 
-  const int max_tiles = 224*224*0.25; 
   int t;
   double total_time = 0.0f;
   long total_flops = 0;
 
   if (verify) printf("Verifying with Reduced batch size of 8, since direct conv takes long time...\n\n\n\n");
 
-  falcon_init_lib(batch, Ni, No, Ri, Ri);
-  printf("B %d Ri %d Ni %d No %d\n", batch, Ri, Ni, No);
-  if(verify)
-      winograd_conv(1, Ri, Ni, No, 8, &total_flops, &total_time, 50, verify);
-  else
-      winograd_conv(1, Ri, Ni, No, batch, &total_flops, &total_time, 50, verify);
-
-  falcon_free_lib();
-
+  //falcon_init_lib(32, 512, 512, 258, 258);
+  int Ro;
+  for(batch = 32; batch <= 128; batch += 96)
+    for(Ni = 128; Ni <= 512; Ni += 128)
+      for(No = 128; No <= 512; No += 128)
+        for(Ro = 32; Ro <= 256; Ro *= 2)
+        {
+          Ri = Ro + 2;
+          printf("B %d Ri %d Ni %d No %d\n", batch, Ri, Ni, No);
+          if(verify)
+            winograd_conv(1, Ri, Ni, No, 8, &total_flops, &total_time, 50, verify);
+          else
+            winograd_conv(1, Ri, Ni, No, batch, &total_flops, &total_time, 50, verify);
+        }
+  //falcon_free_lib();
   return 0;
 }
+
+
+int test_winograd_conv(int Ri, int Ni, int No, int batch, int verify){
+  int i, j; 
+  double timer; 
+
+  int t;
+  double total_time = 0.0f;
+  long total_flops = 0;
+
+  if (verify) printf("Verifying with Reduced batch size of 8, since direct conv takes long time...\n\n\n\n");
+
+  //falcon_init_lib(32, 512, 512, 258, 258);
+  printf("B %d Ri %d Ni %d No %d\n", batch, Ri, Ni, No);
+  if(verify)
+    winograd_conv(1, Ri, Ni, No, 8, &total_flops, &total_time, 50, verify);
+  else
+    winograd_conv(1, Ri, Ni, No, batch, &total_flops, &total_time, 50, verify);
+  //falcon_free_lib();
+  return 0;
+}
+

@@ -1,42 +1,34 @@
-##swDNNv2.0
+# swDNNv1.0
+A Deep Learning Library for Sunway TaihuLight
 
-##Features
-three convolutional layer implementations.
-1. Explicit-GEMM
-#im2col
-1. support stride
-2. support batch processing
-#col2im
+## Features
+### Convolution layer
+three convolutional layer implementations.  
+1. Explicit-GEMM  
+2. Implicit-GEMM  
+3. Winograd  
 
-2. Implicit-GEMM
+### Pooling
 
-3. Winograd
+### Batch Normalization
 
+### LSTM
 
-# TODO
-# why batch-im2col is slow in some cases
-It is not because of data movement in LDM.
-bad DMA pattern?
-
+### Tensor Transformation
 
 ## How to
-#Use
-mkdir ./build/
+### Use
+mkdir ./build/  
 cd build && cmake .. && make
 
-#Add new layers
-1. mkdir a directory using your new layer name in ./slave/
+### Add new layers
+1. mkdir a directory using your new layer name in ./slave/  
 `mkdir ./slave/conv`
-write your slave code with name sw_slave_###
-vi sw_slave_conv.c
-2. write your host code (interface to call slave code) in ./src/sw###.c
-vi swconv.c
-3. write your header file in ./include/sw###.h
-vi swconv.h
+2. write your slave code with name sw_slave_XXX, i.e. sw_slave_conv.c  
+3. write your host code (interface to call slave code) in ./src/swXXX.c, i.e. swconv.c  
+4. write your header file in ./include/swXXX.h, i.e. swconv.h  
+5. write your test code in ./unitest/src/test_XXX.c  
+6. update test header file in ./unitest/include/test_XXX.h  
 
-4. write your test code in ./unitest/src/test_###.c
-6. update test header file in ./unitest/include/test_###.h
-
-
-#Author
+## Author
 Jiarui Fang fang_jiarui@163.com

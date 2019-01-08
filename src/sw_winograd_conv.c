@@ -24,6 +24,7 @@ const long MAX_TILES = (MAX_IROWS-2)*(MAX_IROWS-2)*0.25;
 // FSTRIDE is the max C*K for filter
 const long FSTRIDE = (MAX_FILTER_CHANNELS+1)*(MAX_FILTERS+1); 
 
+/*
 float* t_filter;
 float* t_image;
 float* c_out;
@@ -48,6 +49,7 @@ void falcon_free_lib(){
     _aligned_free(t_image);
     _aligned_free(c_out);
 }
+*/
 
 //input layout (B, Ri, Ci, Ni)
 //trans input layout (16, B, T, Ni)
@@ -535,6 +537,17 @@ static void fjr_out_transform(const float* d, float* out, int T, int No, int B, 
 
 //Routine usage interface
 void sw_winograd_conv(const int M, float* image, const int irows, const int C, float* filter, const int K, const int batch, float* out, int use_blas){
+  float* t_filter;
+  float* t_image;
+  float* c_out;
+
+  int T = (irows-2)*(irows-2)/4;
+  t_filter = (float*)_aligned_malloc(16*C*K*sizeof(float), 128);    
+  assert(t_filter != NULL);
+  t_image = (float*)_aligned_malloc(16*C*T*batch*sizeof(float), 128);    
+  assert(t_image != NULL);
+  c_out = (float*)_aligned_malloc(16*K*T*batch*sizeof(float), 128);
+  assert(c_out != NULL);
 
   const int outHeight = irows-2;
   const int outWidth = irows-2;
@@ -655,5 +668,9 @@ void sw_winograd_conv(const int M, float* image, const int irows, const int C, f
   printf("sum1 %f, sum2 %f\n", sum1, sum2);
   free(out_host);
 #endif
+
+  _aligned_free(t_filter);
+  _aligned_free(t_image);
+  _aligned_free(c_out);
 }
 
